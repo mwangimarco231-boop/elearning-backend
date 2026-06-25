@@ -1,0 +1,22 @@
+services:
+  db:
+    container_name: e-learning
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: yourSuperSecurePassword
+      PG-DATA: /data/postgres
+    volumes:
+      - db:/data/postgres
+    ports:
+      - "9092:5432"
+    networks:
+      - db
+    restart: unless-stopped
+
+networks:
+  db:
+    driver: bridge
+
+volumes:
+  db:
