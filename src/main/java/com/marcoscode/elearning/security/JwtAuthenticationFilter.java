@@ -21,14 +21,13 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 import java.io.IOException;
 
 @Component
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @__(@Qualifier("handlerExceptionResolver")))
 public class JwtAuthenticationFilter
         extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
 
-    @Qualifier("handlerExceptionResolver")
     private final HandlerExceptionResolver resolver;
 
 
