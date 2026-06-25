@@ -1,14 +1,12 @@
 package com.marcoscode.elearning.security;
 
-
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Qualifier; // 💡 Kept for parameter target
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,29 +19,34 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 import java.io.IOException;
 
 @Component
-@RequiredArgsConstructor(onConstructor_ = @__(@Qualifier("handlerExceptionResolver")))
-public class JwtAuthenticationFilter
-        extends OncePerRequestFilter {
+// ❌ Removed Lombok's @RequiredArgsConstructor entirely to avoid metadata placement errors
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
-
     private final HandlerExceptionResolver resolver;
 
-
+    // ✅ Clean, explicit constructor matching Spring's parameter injection rules perfectly
+    public JwtAuthenticationFilter(
+            JwtService jwtService,
+            UserDetailsService userDetailsService,
+            @Qualifier("handlerExceptionResolver") HandlerExceptionResolver resolver
+    ) {
+        this.jwtService = jwtService;
+        this.userDetailsService = userDetailsService;
+        this.resolver = resolver;
+    }
 
     @Override
     protected void doFilterInternal(
             @Nonnull HttpServletRequest request,
             @Nonnull HttpServletResponse response,
             @Nonnull FilterChain filterChain
-    )
-        throws ServletException, IOException {
+    ) throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
 
-        if(authHeader == null || !authHeader.startsWith("Bearer ")){
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
-
             return;
         }
 
@@ -52,37 +55,23 @@ public class JwtAuthenticationFilter
         try {
             String username = jwtService.extractUsername(jwt);
 
-            if (username != null
-                    && SecurityContextHolder
-                    .getContext()
-                    .getAuthentication() == null
-            ) {
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-                if(jwtService.isTokenValid(jwt, userDetails)) {
-
+                if (jwtService.isTokenValid(jwt, userDetails)) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails,
                             null,
                             userDetails.getAuthorities()
                     );
 
-                    authToken.setDetails(
-                            new WebAuthenticationDetailsSource()
-                                    .buildDetails(request)
-                    );
-
-                    SecurityContextHolder
-                            .getContext()
-                            .setAuthentication(authToken);
-
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
             }
-
             filterChain.doFilter(request, response);
-        }  catch (ExpiredJwtException e) {
+        } catch (ExpiredJwtException e) {
             resolver.resolveException(request, response, null, e);
         }
-
     }
 }
