@@ -85,7 +85,7 @@ public class AuthService {
 
         refreshTokenService.revokeToken(refreshToken);
 
-        User user = refreshToken.getUser();
+        User user = refreshToen.getUser();
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
 
