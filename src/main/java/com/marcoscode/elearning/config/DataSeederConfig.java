@@ -14,6 +14,8 @@ import com.marcoscode.elearning.instructor.InstructorRepository;
 import com.marcoscode.elearning.student.Student;
 import com.marcoscode.elearning.student.StudentRepository;
 import com.marcoscode.elearning.user.Role;
+import com.marcoscode.elearning.user.User;
+import com.marcoscode.elearning.user.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -29,28 +31,13 @@ public class DataSeederConfig {
                                         StudentRepository studentRepository,
                                         PasswordEncoder passwordEncoder) {
         return args -> {
-            //     AUTOMATED FIRS ADMIN INITIALIZER
-            String adminEmail = "admin@elearning.com";
-            String adminPassword = "adminPassword123";
 
-            if(!studentRepository.existsByEmail(adminEmail)) {
-                var initialAdmin = Student.builder()
-                        .firstName("System")
-                        .lastName("Admin")
-                        .email(adminEmail)
-                        .password(passwordEncoder.encode(adminPassword))
-                        .role(Role.ADMIN)
-                        .build();
 
-                studentRepository.save(initialAdmin);
-                System.out.println("First System Admin initialized successfully");
-            }
+            //AUTOMATED FIRST INSTRUCTOR INITIALIZER
 
             String instructorEmail = "instructor@learning.com";
             String instructorPassword = "instructorPassword123";
 
-
-            //AUTOMATED FIRST INSTRUCTOR INITIALIZER
             if (!instructorRepository.existsByEmail(instructorEmail)) {
                 var initialInstructor = Instructor.builder()
                         .firstName("System")
