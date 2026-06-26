@@ -45,15 +45,6 @@ public class StudentService {
 
         List<Enrollment> enrollments = enrollmentRepository.findByStudentIdIn(studentIds);
 
-//        System.out.println("Student IDs: " + studentIds);
-//        System.out.println("Enrollments found: " + enrollments.size());
-//
-//        enrollments.forEach(e ->
-//                System.out.println(
-//                        "Student: " + e.getStudent().getId()
-//                                + " Course: " + e.getCourse().getId()
-//                )
-//        );
 
         Map<Long, List<Course>> courseByStudent = enrollments.stream()
                 .collect(Collectors.groupingBy(enrollment ->

@@ -3,6 +3,7 @@ package com.marcoscode.elearning.student;
 import com.marcoscode.elearning.student.dto.StudentCreateDto;
 import com.marcoscode.elearning.student.dto.StudentResponseDto;
 import com.marcoscode.elearning.student.dto.StudentUpdateDto;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,7 @@ public class StudentController {
     private final StudentService studentService;
 
     @GetMapping
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<Page<StudentResponseDto>> getStudents(
             Pageable pageable
     ) {
@@ -29,6 +31,7 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<StudentResponseDto> getStudentById(
             @PathVariable Long id
     ){
@@ -36,6 +39,7 @@ public class StudentController {
     }
 
     @GetMapping("my-profile")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<StudentResponseDto> getMyOwnProfile(
     ){
         return ResponseEntity.ok(studentService.getMyOwnProfile());
@@ -51,6 +55,7 @@ public class StudentController {
     }
 
     @PutMapping("/my-profile")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<StudentResponseDto> updateMyProfile(
             @Valid @RequestBody StudentUpdateDto updateDto
     ) {

@@ -4,6 +4,7 @@ package com.marcoscode.elearning.resource;
 import com.marcoscode.elearning.resource.dto.ResourceCreateDto;
 import com.marcoscode.elearning.resource.dto.ResourceResponseDto;
 import com.marcoscode.elearning.resource.dto.ResourceUpdateDto;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1")
+@SecurityRequirement(name = "bearerAuth")
 @RequiredArgsConstructor
 public class ResourceController {
     private final ResourceService resourceService;

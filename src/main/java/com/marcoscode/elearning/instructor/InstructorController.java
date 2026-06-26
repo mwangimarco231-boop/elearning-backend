@@ -4,6 +4,7 @@ import com.marcoscode.elearning.instructor.dto.InstructorCreateDto;
 import com.marcoscode.elearning.instructor.dto.InstructorDashboardDto;
 import com.marcoscode.elearning.instructor.dto.InstructorPublicResponseDto;
 import com.marcoscode.elearning.instructor.dto.InstructorUpdateDto;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -38,12 +39,14 @@ public class InstructorController {
     }
 
     @GetMapping("/my-profile")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<InstructorDashboardDto> getMyProfile(
     ){
         return ResponseEntity.ok(instructorService.getMyProfile());
     }
 
     @PostMapping
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<InstructorPublicResponseDto>registerInstructor(
             @Valid @RequestBody InstructorCreateDto createDto
             ){
@@ -53,6 +56,7 @@ public class InstructorController {
     }
 
     @PutMapping("/my-profile")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<InstructorPublicResponseDto> updateMyProfile(
             @Valid @RequestBody InstructorUpdateDto updateDto
     ){

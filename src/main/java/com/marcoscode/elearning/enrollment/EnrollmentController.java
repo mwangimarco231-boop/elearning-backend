@@ -3,6 +3,7 @@ package com.marcoscode.elearning.enrollment;
 
 import com.marcoscode.elearning.enrollment.dto.EnrollmentCreateDto;
 import com.marcoscode.elearning.enrollment.dto.EnrollmentResponseDto;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/enrollments")
+@SecurityRequirement(name = "bearerAuth")
 public class EnrollmentController {
 
     private final EnrollmentService enrollmentService;
@@ -54,9 +56,7 @@ public class EnrollmentController {
                 .body(enrollmentService.createEnrollment(enrollmentCreateDto));
     }
 
-    @PreAuthorize(
-            "hasRole('ADMIN')"
-    )
+
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteEnrollment(
             @PathVariable Long id

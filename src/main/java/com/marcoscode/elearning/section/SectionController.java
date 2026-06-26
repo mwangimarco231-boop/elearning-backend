@@ -4,6 +4,7 @@ package com.marcoscode.elearning.section;
 import com.marcoscode.elearning.section.dto.SectionCreateDto;
 import com.marcoscode.elearning.section.dto.SectionResponseDto;
 import com.marcoscode.elearning.section.dto.SectionUpdateDto;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -35,6 +36,7 @@ public class SectionController {
     }
 
     @PostMapping("/courses/{courseId}/sections")
+    @SecurityRequirement(name = "bearerAuth")
     @ResponseStatus(HttpStatus.CREATED)
     public SectionResponseDto createSection(
             @PathVariable Long courseId,
@@ -44,6 +46,7 @@ public class SectionController {
     }
 
     @PutMapping("/sections/{sectionId}")
+    @SecurityRequirement(name = "bearerAuth")
     public SectionResponseDto updateSection(
             @PathVariable Long sectionId,
             @Valid @RequestBody SectionUpdateDto sectionUpdateDto
@@ -52,6 +55,7 @@ public class SectionController {
     }
 
     @DeleteMapping("/sections/{sectionId}")
+    @SecurityRequirement(name = "bearerAuth")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteSectionById(
             @PathVariable Long sectionId

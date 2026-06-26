@@ -8,6 +8,7 @@ import com.marcoscode.elearning.instructor.InstructorRepository;
 import com.marcoscode.elearning.user.dto.UserResponseDto;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 
@@ -24,6 +25,8 @@ public class UserService {
     private final InstructorRepository instructorRepository;
 
 
+
+    @PreAuthorize("hasRole('ADMIN')")
     public List<UserResponseDto> getUsers() {
         return userRepository.findAll()
                 .stream()
@@ -31,6 +34,7 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     public UserResponseDto getUserById(Long userId) {
         User targetUser = userRepository.findById(userId)
                 .orElseThrow(()-> new ResourceNotFoundException("User not found"));
@@ -38,7 +42,8 @@ public class UserService {
         return userMapper.toUserResponseDto(targetUser);
     }
 
-@Transactional
+    @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteUserById(Long userId) {
     User targetUser = userRepository.findById(userId)
             .orElseThrow(()-> new ResourceNotFoundException("User not found"));

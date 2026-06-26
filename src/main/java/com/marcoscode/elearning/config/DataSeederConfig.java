@@ -1,4 +1,4 @@
-package com.marcoscode.elearning;
+package com.marcoscode.elearning.config;
 
 import com.github.javafaker.Faker;
 import com.marcoscode.elearning.course.Course;
@@ -15,7 +15,6 @@ import com.marcoscode.elearning.student.Student;
 import com.marcoscode.elearning.student.StudentRepository;
 import com.marcoscode.elearning.user.Role;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;

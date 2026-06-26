@@ -4,6 +4,7 @@ package com.marcoscode.elearning.lecture;
 import com.marcoscode.elearning.lecture.dto.LectureCreateDto;
 import com.marcoscode.elearning.lecture.dto.LectureResponseDto;
 import com.marcoscode.elearning.lecture.dto.LectureUpdateDto;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -38,6 +39,7 @@ public class LectureController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
+    @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/sections/{sectionId}/lectures")
     public LectureResponseDto createLecture(
             @PathVariable Long sectionId,
@@ -47,6 +49,7 @@ public class LectureController {
     }
 
     @PutMapping("/lectures/{lectureId}")
+    @SecurityRequirement(name = "bearerAuth")
     public LectureResponseDto updateLecture(
             @PathVariable Long lectureId,
             @Valid @RequestBody LectureUpdateDto updateDto
@@ -56,6 +59,7 @@ public class LectureController {
 
 
     @DeleteMapping("/lectures/{lectureId}")
+    @SecurityRequirement(name = "bearerAuth")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteLecture(
             @PathVariable Long lectureId

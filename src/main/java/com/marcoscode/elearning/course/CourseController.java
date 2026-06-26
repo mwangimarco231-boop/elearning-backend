@@ -5,6 +5,7 @@ import com.marcoscode.elearning.course.dto.CourseCreateDto;
 import com.marcoscode.elearning.course.dto.CourseResponseDto;
 import com.marcoscode.elearning.course.dto.CourseUpdateDto;
 import com.marcoscode.elearning.course.dto.CourseUpdateInstructorIdDto;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -30,6 +31,7 @@ public class CourseController {
     }
 
     @GetMapping("/my-courses")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<Page<CourseResponseDto>> myCourses(Pageable pageable){
         return ResponseEntity.ok(courseService.myCourses(pageable));
     }
@@ -42,6 +44,7 @@ public class CourseController {
     }
 
     @PostMapping()
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<CourseResponseDto> createCourse(
             @Valid @RequestBody CourseCreateDto courseCreateDto){
         return ResponseEntity
@@ -50,6 +53,7 @@ public class CourseController {
     }
 
     @PutMapping("/{id}")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<CourseResponseDto> updateCourse(
             @PathVariable Long id,
             @Valid @RequestBody CourseUpdateDto courseUpdateDto){
@@ -57,6 +61,7 @@ public class CourseController {
     }
 
     @PutMapping("/{id}/instructor")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<CourseResponseDto> updateCourseInstructorId(
             @PathVariable Long id,
             @Valid @RequestBody CourseUpdateInstructorIdDto courseUpdateInstructorIdDto
@@ -65,6 +70,7 @@ public class CourseController {
     }
 
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<Void> deleteCourse(
             @PathVariable Long id
     ){
