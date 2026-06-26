@@ -19,14 +19,12 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 import java.io.IOException;
 
 @Component
-// ❌ Removed Lombok's @RequiredArgsConstructor entirely to avoid metadata placement errors
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
     private final HandlerExceptionResolver resolver;
 
-    // ✅ Clean, explicit constructor matching Spring's parameter injection rules perfectly
     public JwtAuthenticationFilter(
             JwtService jwtService,
             UserDetailsService userDetailsService,
