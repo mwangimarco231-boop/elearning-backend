@@ -118,13 +118,13 @@ docker compose up -d
 The application will be available at:
 
 ```
-http://localhost:8900
+https://elearning-backend-1-f1vf.onrender.com
 ```
 
 Swagger documentation:
 
 ```
-http://localhost:8900/swagger-ui/index.html
+https://elearning-backend-1-f1vf.onrender.com/swagger-ui/index.html
 ```
 
 ---
@@ -149,6 +149,7 @@ http://localhost:8900/swagger-ui/index.html
 Backend Software Engineer
 
 * GitHub: https://github.com/mwangimarco231-boop/elearning-backend
+* LinkedIn: https://linkedin.com/in/marco-mwangi-8317603bb
 * Email: mwangimarco231@gmail.com
 
 ---
